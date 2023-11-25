@@ -10,13 +10,25 @@ const MessagesController = () => {
     const username = req?.body?.username;
 
     try {
-      const isExistsRoomId = await Rooms.findOne({ _id: roomId }).exec();
+      const isExistsRoomId = await Rooms.findOne({
+        roomId
+      }).exec();
 
       if (!isExistsRoomId) {
         throw new Error("Room is not exists")
       }
+
+      const isUsernameInRoom = isExistsRoomId?.participant.filter(
+        itm => itm === username
+      );
+
+      if (!isUsernameInRoom.length) {
+        throw new Error("User not in the room")
+      };
+
       const newMessage = new Messages({
-        roomId,
+        roomId: isExistsRoomId._id,
+        roomIdName: roomId,
         username,
         text: message
       })
@@ -34,7 +46,7 @@ const MessagesController = () => {
       const data = {
         uptime: process.uptime(),
         message: 'Error',
-        err,
+        error: err?.message,
         date: new Date()
       };
 

@@ -62,8 +62,61 @@ const RoomsController = () => {
 
   }
 
+  const joinRoom = async (req, res) => {
+    const roomId = req?.body?.roomId;
+    const username = req?.body?.username;
+
+    try {
+      if (!roomId || !username) {
+        throw new Error("RoomId or Username is required");
+      }
+
+      const roomSelected = await Rooms.findOne({ roomId });
+      if (roomSelected) {
+        const isUsernameInRoom = roomSelected.participant.filter(
+          user => user === username
+        );
+
+        if (isUsernameInRoom.length) {
+          throw new Error("User already on room")
+        }
+
+        // Insert username into room
+        const updatedRoom = await Rooms.findOneAndUpdate(
+          { _id: roomSelected._id.toString() },
+          {
+            $push: {
+              participant: username
+            }
+          },
+          { new: true }
+        ).exec();
+
+        const data = {
+          uptime: process.uptime(),
+          message: 'Ok',
+          data: updatedRoom,
+          date: new Date()
+        };
+
+        return res.status(200).send(data);
+      }
+
+    } catch (err) {
+      const errors = {
+        uptime: process.uptime(),
+        message: 'Error',
+        error: err?.message,
+        date: new Date()
+      };
+
+      return res.status(400).send(errors);
+    }
+  }
+
   router.get('/', getRooms);
   router.post('/create', createRoom);
+  router.post('/join', joinRoom);
   return router;
 }
 
