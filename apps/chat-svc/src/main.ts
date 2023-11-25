@@ -1,21 +1,14 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+import APIBootstrap from './app/infrastructure/webserver/server';
 
-import express from 'express';
-import * as path from 'path';
+const start = async () => {
+  try {
+    await APIBootstrap.createServer();
 
-const app = express();
+  } catch (err) {
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+    console.log(err);
+    process.exit(1);
+  }
+}
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to chat-svc!' });
-});
-
-const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+start();
