@@ -72,6 +72,10 @@
       "options": {
         "buildTarget": "web-react:build"
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/web-chat-app/Dockerfile . -t web-react"
     }
   },
   "tags": []

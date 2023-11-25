@@ -51,6 +51,10 @@
       "options": {
         "jestConfig": "apps/chat-svc/jest.config.ts"
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/chat-svc/Dockerfile . -t chat-svc"
     }
   },
   "tags": []
