@@ -35,22 +35,6 @@ const createClient = ({ app }: ISocket) => {
       // const
     });
 
-    // socket.on('updateProduct', (data) => {
-    //   console.log('UPDATED')
-    //   const productId = data?.product?._id || ""
-    //   const newProductList = productList?.map(d => {
-    //     if (d?.id === productId) return { ...d, data }
-
-    //     return d
-    //   });
-
-    //   updateProductState(newProductList)
-
-    //   // Update Product Bid Status
-    //   socket.emit(`product-bid::${productId}`, data);
-    //   socket.emit(`products`, newProductList);
-    // })
-
     socket.on('disconnect', () => {
       console.log('🔥: A user disconnected');
     });

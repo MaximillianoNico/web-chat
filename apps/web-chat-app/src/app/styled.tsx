@@ -31,4 +31,16 @@ export const Button = styled(ButtonAntd)`
   font-size: 16px !important;
   height: 50px !important;
   background-color: #5DB075;
+  max-width: 35em;
+`
+
+export const Footer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const Wrapper = styled.div`
+  position: relative;
 `

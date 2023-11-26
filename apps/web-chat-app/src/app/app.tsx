@@ -1,7 +1,7 @@
 import LayoutPage from './layout';
 import { Typography } from 'antd';
 
-import { Header, Container, Textfield, Fixed, Button } from './styled'
+import { Header, Container, Textfield, Fixed, Button, Footer } from './styled'
 import { useAction } from './action';
 
 export function App() {
@@ -31,9 +31,15 @@ export function App() {
         />
       </Container>
       <Fixed>
-        <Button onClick={onSubmit} type="primary" shape="round" size={"large"}>
-          JOIN
-        </Button>
+        <Footer>
+          <Button
+            onClick={onSubmit}
+            type="primary"
+            shape="round"
+            size={"large"}>
+            JOIN
+          </Button>
+        </Footer>
       </Fixed>
     </LayoutPage>
   );

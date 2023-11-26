@@ -5,7 +5,7 @@ import Rooms from '../../infrastructure/repository/mongo/Room';
 const router = express.Router();
 const MessagesController = () => {
   const sendMessage = async (req, res) => {
-    const roomId = req?.body?.roomId;
+    const roomId = req?.user?.roomId;
     const message = req?.body?.message;
     const username = req?.body?.username;
 
@@ -41,7 +41,9 @@ const MessagesController = () => {
         date: new Date()
       };
 
-      return res.status(400).send(response);
+      await req?.client?.emit(`send-message:${roomId}`, data)
+
+      return res.status(200).send(response);
     } catch (err) {
       const data = {
         uptime: process.uptime(),

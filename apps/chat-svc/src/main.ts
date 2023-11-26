@@ -2,7 +2,7 @@ import APIBootstrap from './app/infrastructure/webserver/server';
 
 const start = async () => {
   try {
-    await APIBootstrap.createServer();
+    APIBootstrap.createServer();
 
   } catch (err) {
 

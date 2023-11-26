@@ -1,4 +1,5 @@
 import express from 'express';
+import jwt from "jsonwebtoken";
 import Rooms from '../../infrastructure/repository/mongo/Room';
 
 const router = express.Router();
@@ -92,10 +93,18 @@ const RoomsController = () => {
           { new: true }
         ).exec();
 
+        const token = jwt.sign({
+          id: updatedRoom?._id,
+          roomId: updatedRoom.roomId,
+          createdAt: updatedRoom.createdAt
+        }, process?.env?.NX_JWT_KEY ?? "vouch-key");
+
         const data = {
           uptime: process.uptime(),
           message: 'Ok',
-          data: updatedRoom,
+          data: {
+            token
+          },
           date: new Date()
         };
 
