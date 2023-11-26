@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from "jsonwebtoken";
 import Rooms from '../../infrastructure/repository/mongo/Room';
+import verifyToken from '../../infrastructure/middleware/auth';
 
 const router = express.Router();
 const RoomsController = () => {
@@ -96,7 +97,8 @@ const RoomsController = () => {
         const token = jwt.sign({
           id: updatedRoom?._id,
           roomId: updatedRoom.roomId,
-          createdAt: updatedRoom.createdAt
+          createdAt: updatedRoom.createdAt,
+          username,
         }, process?.env?.NX_JWT_KEY ?? "vouch-key");
 
         const data = {
@@ -123,9 +125,44 @@ const RoomsController = () => {
     }
   }
 
+  const exitRoom = async (req, res) => {
+    const roomId = req?.user?.roomId;
+    const username = req?.user?.username;
+
+    try {
+      await Rooms.findOneAndUpdate(
+        { roomId },
+        {
+          $pull: {
+            participant: username
+          }
+        },
+        { new: true }
+      ).exec();
+
+      const data = {
+        uptime: process.uptime(),
+        message: 'Success',
+        date: new Date()
+      };
+
+      return res.status(200).send(data);
+    } catch (err) {
+      const errors = {
+        uptime: process.uptime(),
+        message: 'Error',
+        error: err?.message,
+        date: new Date()
+      };
+
+      return res.status(400).send(errors);
+    }
+  }
+
   router.get('/', getRooms);
   router.post('/create', createRoom);
   router.post('/join', joinRoom);
+  router.post('/exit', verifyToken, exitRoom);
   return router;
 }
 

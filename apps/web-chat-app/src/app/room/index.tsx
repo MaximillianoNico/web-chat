@@ -5,15 +5,16 @@ import LayoutPage from "../layout";
 import { Header, Exit, Title, ChatContainer, ChatBox, ArrowWrapper, Textfield, ChatBoxContainer, ChatTextfield } from "./styled";
 import ChatItem from "../../components/chat-item";
 import { useAction } from "./action";
+import withGuard from "../../hoc/withGuard";
 
 const Page = () => {
-  const { onBack } = useAction();
+  const { onExit } = useAction();
 
   return (
     <LayoutPage>
       <Header>
         <Exit>
-          <Typography.Title onClick={onBack} style={{ color: '#5DB075'}} level={5}>
+          <Typography.Title onClick={onExit} style={{ color: '#5DB075'}} level={5}>
             Exit
           </Typography.Title>
         </Exit>
@@ -53,4 +54,4 @@ const Page = () => {
   )
 }
 
-export default Page;
+export default withGuard(Page);

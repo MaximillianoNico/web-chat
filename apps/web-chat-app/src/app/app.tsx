@@ -1,11 +1,12 @@
 import LayoutPage from './layout';
-import { Typography } from 'antd';
+import { Typography, Alert } from 'antd';
 
 import { Header, Container, Textfield, Fixed, Button, Footer } from './styled'
 import { useAction } from './action';
+import withGuard from '../hoc/withGuard';
 
 export function App() {
-  const { onSubmit, onChange, credentials } = useAction();
+  const { errors, onSubmit, onChange, credentials } = useAction();
 
   return (
     <LayoutPage>
@@ -15,6 +16,7 @@ export function App() {
         </Typography.Title>
       </Header>
       <Container>
+        {errors && <Alert message={errors} type="error" />}
         <Textfield
           value={credentials.username}
           name="username"
@@ -26,7 +28,7 @@ export function App() {
           value={credentials.roomId}
           name="roomId"
           onChange={onChange}
-          placeholder='Password'
+          placeholder='Room Id'
           type="text"
         />
       </Container>
@@ -45,4 +47,4 @@ export function App() {
   );
 }
 
-export default App;
+export default withGuard(App);
