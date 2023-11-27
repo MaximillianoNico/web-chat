@@ -3,6 +3,8 @@ import { Typography } from "antd";
 
 interface IChatItem {
   isOwnChat?: boolean
+  text?: string
+  sender?: string
 }
 
 const ChatItem = (props: IChatItem) => {
@@ -10,7 +12,7 @@ const ChatItem = (props: IChatItem) => {
     return (
       <Card $isOwnChat>
         <Typography.Text>
-          Card content
+          {props?.text}
         </Typography.Text>
       </Card>
     )
@@ -18,10 +20,10 @@ const ChatItem = (props: IChatItem) => {
 
   return (
     <Wrapper>
-      <Sender>sender_name</Sender>
+      <Sender>{props?.sender}</Sender>
       <Card>
         <Typography.Text>
-          Card content
+          {props?.text}
         </Typography.Text>
       </Card>
     </Wrapper>

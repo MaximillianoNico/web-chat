@@ -1,5 +1,5 @@
 {
-  "name": "web-react",
+  "name": "web-chat-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/web-chat-app/src",
   "projectType": "application",
@@ -9,7 +9,8 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/web-chat-app"
+        "outputPath": "dist/apps/web-chat-app",
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {
@@ -24,15 +25,15 @@
       "executor": "@nx/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "web-react:build"
+        "buildTarget": "web-chat-app:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "web-react:build:development",
+          "buildTarget": "web-chat-app:build:development",
           "hmr": true
         },
         "production": {
-          "buildTarget": "web-react:build:production",
+          "buildTarget": "web-chat-app:build:production",
           "hmr": false
         }
       }
@@ -41,14 +42,14 @@
       "executor": "@nx/vite:preview-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "web-react:build"
+        "buildTarget": "web-chat-app:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "web-react:build:development"
+          "buildTarget": "web-chat-app:build:development"
         },
         "production": {
-          "buildTarget": "web-react:build:production"
+          "buildTarget": "web-chat-app:build:production"
         }
       }
     },
@@ -70,12 +71,12 @@
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "web-react:build"
+        "buildTarget": "web-chat-app:build"
       }
     },
     "docker-build": {
       "dependsOn": ["build"],
-      "command": "docker build -f apps/web-chat-app/Dockerfile . -t web-react"
+      "command": "docker build -f apps/web-chat-app/Dockerfile . -t web-chat-app"
     }
   },
   "tags": []

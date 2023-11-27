@@ -1,5 +1,5 @@
 {
-  "name": "web-react-e2e",
+  "name": "web-chat-app-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/web-chat-app-e2e/src",
@@ -9,14 +9,14 @@
       "options": {
         "cypressConfig": "apps/web-chat-app-e2e/cypress.config.ts",
         "testingType": "e2e",
-        "devServerTarget": "web-react:serve"
+        "devServerTarget": "web-chat-app:serve"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "web-react:serve:production"
+          "devServerTarget": "web-chat-app:serve:production"
         },
         "ci": {
-          "devServerTarget": "web-react:serve-static"
+          "devServerTarget": "web-chat-app:serve-static"
         }
       }
     },
@@ -28,6 +28,6 @@
       }
     }
   },
-  "implicitDependencies": ["web-react"],
+  "implicitDependencies": ["web-chat-app"],
   "tags": []
 }

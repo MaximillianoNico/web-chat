@@ -16,7 +16,8 @@
         "tsConfig": "apps/chat-svc/tsconfig.app.json",
         "assets": ["apps/chat-svc/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/chat-svc/webpack.config.js"
+        "webpackConfig": "apps/chat-svc/webpack.config.js",
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {},

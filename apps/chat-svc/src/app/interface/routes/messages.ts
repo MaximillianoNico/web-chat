@@ -56,6 +56,34 @@ const MessagesController = () => {
     }
   }
 
+  const getMessageByID = async (req, res) => {
+    const roomId = req?.query?.roomId;
+
+    try {
+      const rows = await Messages.find({ roomIdName: roomId });
+
+      const response = {
+        uptime: process.uptime(),
+        message: 'Ok',
+        data: rows,
+        date: new Date()
+      };
+
+      return res.status(200).send(response);
+    } catch (err) {
+      const data = {
+        uptime: process.uptime(),
+        message: 'Error',
+        error: err?.message,
+        date: new Date()
+      };
+
+      return res.status(400).send(data);
+    }
+
+  }
+
+  router.get('/', getMessageByID);
   router.post('/send', sendMessage);
 
   return router;

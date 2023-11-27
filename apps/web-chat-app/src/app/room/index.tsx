@@ -6,9 +6,23 @@ import { Header, Exit, Title, ChatContainer, ChatBox, ArrowWrapper, Textfield, C
 import ChatItem from "../../components/chat-item";
 import { useAction } from "./action";
 import withGuard from "../../hoc/withGuard";
+import { useRef } from "react";
 
 const Page = () => {
-  const { onExit } = useAction();
+  const bottomRef = useRef<HTMLDivElement>();
+  const {
+    onExit,
+    currentMessage,
+    message,
+    isConnected,
+    isOwnChat,
+    onSend,
+    onChange
+  } = useAction({
+    onRetrieve: () => {
+      if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  });
 
   return (
     <LayoutPage>
@@ -25,27 +39,29 @@ const Page = () => {
         </Title>
       </Header>
       <ChatContainer>
-        <ChatItem />
-        <ChatItem isOwnChat />
-
-        <ChatItem />
-        <ChatItem isOwnChat />
-
-        <ChatItem />
-        <ChatItem isOwnChat />
-
-        <ChatItem />
-        <ChatItem isOwnChat />
+        {isConnected && !!message.length && message.map(
+          ({ text, username }, key) => (
+            <ChatItem
+              key={key}
+              text={text}
+              sender={username}
+              isOwnChat={isOwnChat(username)}
+            />
+          )
+        )}
+        <div ref={bottomRef} />
       </ChatContainer>
       <ChatBoxContainer>
         <ChatBox>
           <ChatTextfield>
             <Textfield
               autoSize
+              value={currentMessage}
+              onChange={onChange}
               placeholder="Message here..."
             />
             <ArrowWrapper>
-              <ArrowUp size={20} color="white" />
+              <ArrowUp onClick={onSend} size={20} color="white" />
             </ArrowWrapper>
           </ChatTextfield>
         </ChatBox>

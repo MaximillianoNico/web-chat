@@ -16,7 +16,7 @@ export const useAction = () => {
   });
 
   const navigate = useNavigate();
-  const [, setCookie] = useCookies(['tkn']);
+  const [, setCookie] = useCookies(['tkn', 'roomId', 'username']);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => setCredentials(
     prev => ({
@@ -37,17 +37,19 @@ export const useAction = () => {
       credentials.roomId ?? ""
     )
 
-
-    if (response?.error) {
-      setErrors(response?.error);
+    if (response?.error ?? err?.response?.data?.error) {
+      setErrors(response?.error ?? err.response?.data?.error);
 
       return;
     }
 
     if (!err && response.data?.token) {
       setCookie('tkn', response?.data?.token ?? "");
+      setCookie('roomId', credentials.roomId);
+      setCookie('username', credentials.username)
+
       setErrors("")
-      navigate('/room');
+      navigate(`/room/${credentials.roomId}`);
     }
   }
 

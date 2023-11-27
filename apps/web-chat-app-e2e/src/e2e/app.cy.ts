@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 
-describe('web-react-e2e', () => {
+describe('web-chat-app-e2e', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {

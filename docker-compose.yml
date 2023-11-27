@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mongodb:
+    container_name: db-vouch
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+  app:
+    depends_on:
+      - mongodb
+    image: chat-svc
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      NX_API_PORT: 8080
+      NX_MONGO_URL: mongodb://mongodb:27017
+      NX_MONGO_INITDB_DATABASE: vouch-db
+      NX_JWT_KEY: vouch-key
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo_data: {}
