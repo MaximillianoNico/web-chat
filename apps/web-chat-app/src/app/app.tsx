@@ -1,8 +1,20 @@
 import LayoutPage from './layout';
-import { Typography, Alert, Input, Button as AntButton, Spin, Modal, Form } from 'antd';
-import { SearchOutlined, ReloadOutlined, UserOutlined } from '@ant-design/icons';
+import { Typography, Alert, Button as AntButton, Spin, Modal, Form } from 'antd';
+import { SearchOutlined, UserOutlined } from '@ant-design/icons';
 
-import { Header, Container, FormContainer, RoomsList, RoomCard, RoomHeader, RoomInfo, JoinButton, SearchInput, BackButton, Textfield } from './styled'
+import {
+  Header,
+  Container,
+  FormContainer,
+  RoomsList,
+  RoomCard,
+  RoomHeader,
+  RoomInfo,
+  JoinButton,
+  SearchInput,
+  BackButton,
+  Textfield
+} from './styled'
 import { useAction, useRooms } from './action';
 import withGuard from '../hoc/withGuard';
 import { useMemo, useState } from 'react';
