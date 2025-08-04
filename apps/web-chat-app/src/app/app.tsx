@@ -5,7 +5,7 @@ import { SearchOutlined, ReloadOutlined, UserOutlined } from '@ant-design/icons'
 import { Header, Container, FormContainer, RoomsList, RoomCard, RoomHeader, RoomInfo, JoinButton, SearchInput, BackButton, Textfield } from './styled'
 import { useAction, useRooms } from './action';
 import withGuard from '../hoc/withGuard';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export function App() {
   const { errors, onSubmit, onChange, credentials } = useAction();
@@ -15,9 +15,11 @@ export function App() {
   const [selectedRoomId, setSelectedRoomId] = useState('');
   const [form] = Form.useForm();
 
-  const filteredRooms = rooms.filter(room =>
-    room.roomId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    room.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredRooms = useMemo(
+    () => rooms.filter(room =>
+      room.roomId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      room.description?.toLowerCase().includes(searchTerm.toLowerCase())
+    ), [rooms, searchTerm]
   );
 
   const handleJoinClick = (roomId: string) => {
