@@ -1,20 +1,17 @@
 import express from 'express';
 
 const router = express.Router();
-const HealthCheckController = () => {
-  const healthCheck = (req, res) => {
-    const data = {
-      uptime: process.uptime(),
-      message: 'Ok',
-      date: new Date()
-    };
 
-    res.status(200).send(data);
-  }
+const healthCheck = (_, res) => {
+  const data = {
+    uptime: process.uptime(),
+    message: 'Ok',
+    date: new Date()
+  };
 
-  router.get('/health-check', healthCheck);
-
-  return router;
+  res.status(200).send(data);
 }
 
-export default HealthCheckController;
+router.get('/health-check', healthCheck);
+
+export default router;

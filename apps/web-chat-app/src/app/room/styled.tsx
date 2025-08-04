@@ -1,89 +1,135 @@
-import { Input, Card as CardItem } from "antd";
 import styled from "styled-components";
+import { Input } from "antd";
 
-interface IChatItem {
-  $isOwnChat?: boolean
-}
+const { TextArea } = Input;
 
 export const Header = styled.div`
-  display: grid;
-  grid-template-columns: 30px auto;
-`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: white;
+  border-bottom: 1px solid #f3f4f6;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
 
 export const Exit = styled.div`
-  color: #5DB075;
-`
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  border-radius: 8px;
+
+  &:hover {
+    background: #f3f4f6;
+    color: #111827;
+  }
+`;
 
 export const Title = styled.div`
+  flex: 1;
   text-align: center;
-`
+`;
+
+export const UserCount = styled.div`
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+`;
 
 export const ChatContainer = styled.div`
-  overflow: scroll;
-  height: calc(100vh - 200px);
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-
-  &&::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-export const ChatBox = styled.div`
-  position: absolute;
-  bottom: 16px;
-  left: 4px;
-  right: 4px;
-`
-
-export const ChatTextfield = styled.div`
-  position: relative;
-`
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  padding-bottom: 100px; /* Add space for sticky input */
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
 
 export const ChatBoxContainer = styled.div`
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100px;
-  width: auto;
-`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px 20px 20px;
+  background: white;
+  border-top: 1px solid #f3f4f6;
+  z-index: 100;
+`;
 
-export const ArrowWrapper = styled.div`
-  position: absolute;
-  bottom: 14px;
-  right: 6px;
-  width: 28px;
-  border-radius: 50%;
-  background-color: #5DB075;
+export const ChatBox = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 28px;
-`
+  align-items: flex-end;
+  gap: 12px;
+`;
 
-export const Card = styled(CardItem)<IChatItem>`
-  width: 70%;
-  background-color: #F6F6F6;
-  border: 1px solid #E8E8E8;
-  float: ${({ $isOwnChat }) => $isOwnChat ? "right" : "left"};
-  margin: 10px 0px;
-  background-color: ${({ $isOwnChat }) => $isOwnChat ? "#5DB075" :"#F6F6F6"};
-`
-
-export const Textfield = styled(Input.TextArea)`
-  font-size: 16px;
-  min-height: 40px !important;
-  margin: 8px 0px;
-  padding-right: 35px;
-  color: #BDBDBD;
-  background-color: #F6F6F6;
+export const ChatTextfield = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  background: #f3f4f6;
   border-radius: 20px;
+  padding: 8px 8px 8px 16px;
+  gap: 8px;
+`;
 
-  input {
-    background-color: #F6F6F6;
+export const Textfield = styled(TextArea)`
+  border: none;
+  background: transparent;
+  resize: none;
+  font-size: 16px;
+
+  &:focus {
+    box-shadow: none;
+    border: none;
   }
 
-  textarea {
-    min-height: 40px !important;
+  &::placeholder {
+    color: #9ca3af;
   }
-`
+
+  .ant-input {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    &:focus {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+  }
+`;
+
+export const ArrowWrapper = styled.div<{ disabled?: boolean }>`
+  width: 32px;
+  height: 32px;
+  background: ${(props) => (props.disabled ? "#d1d5db" : "#3b82f6")};
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: ${(props) => (props.disabled ? "#d1d5db" : "#2563eb")};
+    transform: ${(props) => (props.disabled ? "none" : "scale(1.05)")};
+  }
+`;

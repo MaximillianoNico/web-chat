@@ -1,4 +1,4 @@
-import APIBootstrap from './app/infrastructure/webserver/server';
+import APIBootstrap from '@infrastructure/webserver/server';
 
 const start = async () => {
   try {

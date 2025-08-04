@@ -1,15 +1,15 @@
-import { Typography } from "antd";
-import { ArrowUp } from "@phosphor-icons/react";
+import { Typography, Avatar } from "antd";
+import { ArrowUp, Users } from "@phosphor-icons/react";
 
 import LayoutPage from "../layout";
-import { Header, Exit, Title, ChatContainer, ChatBox, ArrowWrapper, Textfield, ChatBoxContainer, ChatTextfield } from "./styled";
+import { Header, Exit, Title, ChatContainer, ChatBox, ArrowWrapper, Textfield, ChatBoxContainer, ChatTextfield, UserCount } from "./styled";
 import ChatItem from "../../components/chat-item";
 import { useAction } from "./action";
 import withGuard from "../../hoc/withGuard";
 import { useRef } from "react";
 
 const Page = () => {
-  const bottomRef = useRef<HTMLDivElement>();
+  const bottomRef = useRef<HTMLDivElement>(null);
   const {
     onExit,
     currentMessage,
@@ -17,27 +17,35 @@ const Page = () => {
     isConnected,
     isOwnChat,
     onSend,
-    onChange
+    onChange,
+    roomId
   } = useAction({
     onRetrieve: () => {
-      if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
+      if (bottomRef.current) {
+        bottomRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     }
   });
+
+  // Get unique participants count
+  const participants = new Set(message.map(msg => msg.username)).size;
 
   return (
     <LayoutPage>
       <Header>
-        <Exit>
-          <Typography.Title onClick={onExit} style={{ color: '#5DB075'}} level={5}>
-            Exit
-          </Typography.Title>
+        <Exit onClick={onExit}>
+          ←
         </Exit>
         <Title>
-          <Typography.Title level={2}>
-            Room ID
+          <Typography.Title level={4} style={{ margin: 0, fontWeight: 600 }}>
+            {roomId || 'Chat Room'}
           </Typography.Title>
         </Title>
+        <UserCount>
+          <Users size={20} color="#6b7280" />
+        </UserCount>
       </Header>
+
       <ChatContainer>
         {isConnected && !!message.length && message.map(
           ({ text, username }, key) => (
@@ -51,6 +59,7 @@ const Page = () => {
         )}
         <div ref={bottomRef} />
       </ChatContainer>
+
       <ChatBoxContainer>
         <ChatBox>
           <ChatTextfield>
@@ -59,9 +68,10 @@ const Page = () => {
               value={currentMessage}
               onChange={onChange}
               placeholder="Message here..."
+              onPressEnter={onSend}
             />
-            <ArrowWrapper>
-              <ArrowUp onClick={onSend} size={20} color="white" />
+            <ArrowWrapper onClick={onSend}>
+              <ArrowUp size={20} color="white" />
             </ArrowWrapper>
           </ChatTextfield>
         </ChatBox>

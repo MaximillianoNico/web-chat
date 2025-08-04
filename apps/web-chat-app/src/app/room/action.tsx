@@ -45,12 +45,12 @@ export const useAction = (props: IRoomAction) => {
   useEffect(() => {
     if (hasInit) {
       const onConnect = () => {
-        console.log('connect');
+        console.log('[LOG] connect');
         setIsConnected(true);
       }
 
       const onDisconnect = () => {
-        console.log('disconnect');
+        console.log('[LOG] disconnect');
         setIsConnected(false);
       }
 
@@ -113,6 +113,7 @@ export const useAction = (props: IRoomAction) => {
   }
 
   return {
+    roomId: cookies.roomId,
     bottomRef,
     message,
     isConnected,

@@ -7,6 +7,7 @@ services:
     restart: always
     volumes:
       - mongo_data:/data/db
+
   app:
     depends_on:
       - mongodb
@@ -21,6 +22,18 @@ services:
       NX_JWT_KEY: vouch-key
     stdin_open: true
     tty: true
+
+  web-chat-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - app
+    ports:
+      - "3000:3000"
+    environment:
+      API_URL: localhost:8080/api
+    restart: unless-stopped
 
 volumes:
   mongo_data: {}

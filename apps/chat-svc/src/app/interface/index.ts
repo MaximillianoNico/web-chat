@@ -1,8 +1,9 @@
 import healthCheck from './routes/healthcheck';
 import rooms from './routes/rooms';
 import message from './routes/messages';
+
 import { IMainRoute, IRequest } from './types'
-import verifyToken from '../infrastructure/middleware/auth';
+import verifyToken from '@middleware/auth';
 
 const Interface = ({ app, client }: IMainRoute) => {
 
@@ -12,9 +13,9 @@ const Interface = ({ app, client }: IMainRoute) => {
 
     next();
   })
-  app.use('/app', healthCheck());
-  app.use('/api/rooms', rooms());
-  app.use('/api/message', verifyToken, message());
+  app.use('/app', healthCheck);
+  app.use('/api/rooms', rooms);
+  app.use('/api/message', verifyToken, message);
 
   /**
    * Catch 404 and forward to error handle.

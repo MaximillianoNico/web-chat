@@ -6,16 +6,6 @@ interface ISocket {
   app: Application
 }
 
-// const useInitHooks = (defaultState = null) => {
-//   let state = defaultState;
-
-//   const onUpdateState = (update) => {
-//     state = update
-//   }
-
-//   return [state, onUpdateState]
-// }
-
 const createClient = ({ app }: ISocket) => {
   const server = http.createServer(app);
   const io = new Server(server, {
